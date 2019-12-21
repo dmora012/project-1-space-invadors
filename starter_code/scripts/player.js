@@ -2,7 +2,8 @@ class Player extends Component {
     constructor(game, x, y, w, h) {
         super(game, x, y, w, h);
         this.life = 3;
-
+        this.hit=false;
+        this.game=game;
     }
     move() {
         document.onkeydown = event => {
@@ -19,6 +20,7 @@ class Player extends Component {
                     // case 87:
                     //     if (this.y >= 10) this.y -= 20;
                     //     break;
+                    case 83:
                     case 39:
                             if (this.x <= 990 - this.width) this.x += 20;
                             break;
@@ -50,7 +52,9 @@ class Player extends Component {
 //         }
 //     }
 // }
-
+    revertTheHit = () => {
+        this.hit = false;
+    }
     
     crashCollision(ele) {
         if (
@@ -61,10 +65,23 @@ class Player extends Component {
                 ele.x < this.x + this.width &&
                 this.x < ele.x + ele.width)
         ) {
-            setTimeout(() => alert("crash"), 5);
-            window.location.reload();
+
+        if(this.hit==false){
+              this.life--;
+              this.hit=true; 
+              setTimeout(this.revertTheHit, 3000);
+                document.getElementById('life').innerHTML = "Life: "+this.life;
+            console.log(this.life, '.....')
+
+            if(this.life==0){
+                
+                setTimeout(() => alert("Restart Game"), 2);
+                this.game.gameOver();
+                window.location.reload();
+            }
         }
     }
+ }
 }
     // draw() {
     //     this.img.src = "./images/laser-beam.png";

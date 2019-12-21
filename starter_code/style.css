@@ -39,3 +39,18 @@ body button {
 .arrows-img {
     width: 150px;
 }
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+#life {
+    float: left;
+    padding: 20px 0px;
+    font: 20px Arial bold;
+}
+#score {
+    float: left;
+    padding: 20px 0px;
+    font: 20px Arial bold;
+}

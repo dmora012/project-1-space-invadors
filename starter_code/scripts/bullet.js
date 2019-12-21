@@ -1,5 +1,5 @@
 class Bullet {
-  constructor(x, y) {
+  constructor(game,x, y) {
       // super(game,width,height,ctx);
       // this.game = game;
       // this.x = width/2;
@@ -12,6 +12,8 @@ class Bullet {
       this.y = y
       this.width = 2;
       this.height = 5;
+      this.hitObsticle=true;
+      this.game=game;
   }
 
 
@@ -26,7 +28,7 @@ class Bullet {
   //   this.document.addEventListener('click', function() {
   //   // createBullet();
   // });
-    console.log("BULLET!!!!")
+    // console.log("BULLET!!!!")
   this.y -= 5;
   }
 
@@ -35,6 +37,9 @@ class Bullet {
     this.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
+//   revertTheHitObstacle = () => {
+//     this.hitObsticle = false;
+// }
   crashCollision(obstacles) {
     for(let i = 0; i < obstacles.length; i++){
         if((this.y < obstacles[i].y + obstacles[i].height &&
@@ -44,6 +49,16 @@ class Bullet {
             obstacles[i].x < this.x + this.width &&
             this.x < obstacles[i].x + obstacles[i].width))
      { 
+      this.game.score ++;
+      document.getElementById('score').innerHTML = "Score: "+this.game.score;
+      if(this.game.score==3){
+                
+        setTimeout(() => alert("Restart Game"), 2);
+        this.game.youWon();
+        window.location.reload();
+    }
+
+
       function explode(){
         this.img.src = "./images/boom.png";
        console.log(this.img);
@@ -53,9 +68,28 @@ class Bullet {
           obstacles[i].y,
           this.width,
           this.height
-      }
-      setTimeout(obstacles, 2000);
+          // this.score +=1;
+          // if(this.hitObsticle==false){
+          //   this.score++;
+          //   this.hitObsticle=true; 
+          //   // setTimeout(this.revertTheHitObstacle, 2000);
+      
 
+         
+      }
+      
+    
+      // document.getElementById('score').innerHTML = "Score: "+this.score;
+        // checkStatus();
+    //   function checkStatus(){
+  
+    //     if(this.score > 50){
+    //         this.life+=1;
+    //     }
+    // }
+      
+      // setTimeout(obstacles, 2000);
+      
 
       //  this.img = new Image()
       //  this.img.src = "./images/boom.png";
@@ -68,9 +102,15 @@ class Bullet {
       //     this.height
       // );
       obstacles.splice(i, 1);
+      
 }
+
+
 }
+
 }
+
+
 }
 
 

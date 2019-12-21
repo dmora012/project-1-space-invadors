@@ -12,6 +12,7 @@ class Game {
         this.y = undefined;
         this.width = 1200;
         this.height = 700;
+        this.score = 0;
     }
 
     init() {
@@ -30,7 +31,11 @@ class Game {
             this.clear();
             this.drawBackground();
             this.drawMainCharacters();
-            this.spaceship.move();
+            this.spaceship.move(); 
+            // if (this.spaceship.crashCollision(this.fireball)) {
+            //     this.gameOver();
+            //     clearInterval(intervalID);
+            //   }
             console.log(this.bullet.length);
             for(let i = 0; i < this.bullet.length; i++) {
                 this.bullet[i].move();
@@ -83,7 +88,7 @@ class Game {
     }
 
     createBullet() {
-        this.bullet.push(new Bullet((this.spaceship.x + 25), this.spaceship.y))
+        this.bullet.push(new Bullet(this,(this.spaceship.x + 25), this.spaceship.y))
     }
     // obstaclesBoom() {
     //     this.img.src = "./images/aliens.png";
@@ -95,4 +100,33 @@ class Game {
     //         this.height
     //     );
     // }
+    gameOver() {
+        // this.sound.src = './audio/theme-music.wav';
+        // this.sound.play();
+        this.clear();
+        this.drawBackground();
+        this.ctx.font = '70px Arial bold';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillStyle = 'red';
+        this.ctx.fillText(
+          'Game Over!',
+          this.canvas.width / 2,
+          this.canvas.height / 2
+        );
+      }
+      youWon() {
+        // this.sound.src = './audio/theme-music.wav';
+        // this.sound.play();
+        this.clear();
+        this.drawBackground();
+        this.ctx.font = '70px Arial bold';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillStyle = 'red';
+        this.ctx.fillText(
+          'You Saved Us!',
+          this.canvas.width / 2,
+          this.canvas.height / 2
+        );
+      }
+    
 }
